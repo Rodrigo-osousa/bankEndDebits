@@ -43,15 +43,13 @@ public class DebitService {
             throw new Exception("Account not exist");
         }
 
-    
         if (amount < 0) {
             logger.info("Checking balance");
 
             if (creditAccount.get().getBalance() + amount < 0) {
+                logger.info("Balance Insufficient");
                 throw new Exception("Balance Insufficient");
             }
-
-
 
         }
         Double amountToCredit = creditAccount.get().getBalance() + amount;

@@ -12,6 +12,10 @@ public class DebitRequest {
     private Double debitValue;
     private Beneficiary beneficiary;
 
+    public DebitRequest (){
+
+    }
+
     public DebitRequest(String name, String documentNumber, String accountNumber, Date debitDate, Double debitValue, Beneficiary beneficiary) {
         this.name = name;
         this.documentNumber = documentNumber;

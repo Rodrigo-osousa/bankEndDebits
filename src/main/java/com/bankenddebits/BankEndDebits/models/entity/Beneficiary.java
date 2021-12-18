@@ -9,6 +9,10 @@ public class Beneficiary {
 
     private String accountNumber;
 
+    public Beneficiary(){
+
+    }
+
     public Beneficiary(String name, String documentNumber, String accountNumber) {
         this.name = name;
         this.documentNumber = documentNumber;
