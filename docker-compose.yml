@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  app:
+    image: bankenddebits
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgresqldb
+
+  postgresqldb:
+    image: postgres
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_PASSWORD=123690
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=bankend
