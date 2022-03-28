@@ -5,8 +5,11 @@ import com.bankenddebits.BankEndDebits.models.entity.Account;
 import com.bankenddebits.BankEndDebits.models.request.DebitRequest;
 import com.bankenddebits.BankEndDebits.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -19,6 +22,9 @@ public class DebitService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
 
     public DebitResponse debitAccount(DebitRequest debitRequest) throws Exception {
 
@@ -28,6 +34,11 @@ public class DebitService {
         creditAccount(debitRequest.getBeneficiary().getAccountNumber(), debitRequest.getDebitValue());
 
         String debitID = UUID.randomUUID().toString();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy HH:mm:ss");
+        String todayFormated = sdf.format(new Date());
+        kafkaTemplate.send("debitId", debitID + "|" + debitRequest.getDebitValue() + "|" + todayFormated);
+
         return new DebitResponse(debitID);
 
     }
